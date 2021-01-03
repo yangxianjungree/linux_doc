@@ -13,9 +13,10 @@ SYSTEM CALL in Linux
     - [4.1 调用一个系统调用过程总览](#41-调用一个系统调用过程总览)
     - [4.2 封装例程](#42-封装例程)
       - [4.2.1 封装例程简单声明](#421-封装例程简单声明)
-      - [4.2.2 中断号128](#422-中断号128)
-      - [4.2.3 初始化系统调用处理程序entry_INT80_32](#423-初始化系统调用处理程序entry_int80_32)
-      - [4.2.4 内核注册中断处理程序的实现过程](#424-内核注册中断处理程序的实现过程)
+      - [4.2.2 libc中write系统调用封装例程示例](#422-libc中write系统调用封装例程示例)
+      - [4.2.3 中断号128](#423-中断号128)
+      - [4.2.4 初始化系统调用处理程序entry_INT80_32](#424-初始化系统调用处理程序entry_int80_32)
+      - [4.2.5 内核注册中断处理程序的实现过程](#425-内核注册中断处理程序的实现过程)
     - [4.3 系统调用处理程序](#43-系统调用处理程序)
       - [4.3.1 system_call 函数](#431-system_call-函数)
       - [4.3.2 旧版本系统处理程序 entry_INT80_32 实现代码](#432-旧版本系统处理程序-entry_int80_32-实现代码)
@@ -104,36 +105,64 @@ SYSTEM CALL in Linux
 
 每个宏名称中的数字0到5对应着相同调用所用的参数号（系统调用号除外），即被压入寄存器的参数个数及顺序。每个宏严格地需要 ``` 2 + 2 x n ``` 个参数，n是系统调用的参数个数。前两个指明系统调用的返回值类型和名字；后面每一对参数指明对应的系统调用参数的类型和名字。
 
-例如 open() 系统调用封装例程的声明是：
+#### 4.2.2 libc中write系统调用封装例程示例
+
+例如 write() 系统调用封装例程的声明是：
 
 ```
-  long open(const char *filename, int flags, int mode);
+  _syscall3(int, write, int, fd, const char *, buf, unsigned int, count);
 ```
 
-libc（或者glibc）对open系统调用的封装例程定义此系统调用宏的形式为：
+libc（或者glibc）对write系统调用的封装例程定义此系统调用宏的形式为：
 
 ```
 声明：
 
-  _syscall3(long, open, const char*, filename, int, flags, int, mode)
+  _syscall3(int, write, int, fd, const char *, buf, unsigned int, count);
 
 实现展开：
 
-  long open(const char *filename, int flags, int mode)
+  int write(int fd, const char* buf, unsigned int count)
   {
     long __res;
     asm("int $0x80)
-      : ...
-      : "0" (__NR_open), xxx,
-      : ...
-    ...
-    return (long)__res;
+      : "=a" (__res)
+      : "0" (__NR_write), "b", ((long)fd),
+        "c" ((long)buf), "d" ((long)count));
+    
+    if ((unsigned log)__res >= (unsigned long)-125) {
+      errno = -__res;
+      __ret = -1;
+    }
+
+    return (int)__res;
   }
 
 ```
 
+__NR_write 宏来自 _syscall3 的第二个参数（该宏声明可以在头文件 sys/syscall.h 中找到）。它可以展开成 write 系统调用号。当编译前面的函数时，生成下面的汇编代码：
 
-#### 4.2.2 中断号128
+```
+  write:
+      pushl %ebx            ; 将ebx推入堆栈
+      movl  8(%esp), %ebx   ；将第一个参数放入ebx
+      movl  12(%esp), %ecx  ；将第二个参数放入ecx
+      movl  16(%esp), %edx  ；将第三个参数放入edx
+      movl  $4, %eax        ；将 __NR_write 放入 eax
+      int $0x80             ；进行系统调用
+      cmpl  $-126, %eax     ；检测返回码
+      jbe   .L1             ；如无错跳转
+      negl  %eax            ；求eax的补码
+      movl  %eax, errno     ；将结果放入errno
+      movl  $-1, %eax       ；将eax置为-1
+  .L1:  popl  %ebx          ；从堆栈弹出ebx
+      ret                   ; 返回调用程序
+```
+
+在我个人虚拟机中，因系统版本关系并未使用 ``` int $0x80 ``` 指令进入系统调用处理程序。读者可以从第五大节看到还有其他的方式进入系统调用处理程序及相关说明。当然，也可以进入子目录 [system_call_without_libc](./system_call_without_libc/README.md) 看看如何在不使用 libc 或者 glibc 的情况下从用户态进入内核态调用系统调用。
+
+
+#### 4.2.3 中断号128
 
 先决知识：
 
@@ -142,7 +171,7 @@ libc（或者glibc）对open系统调用的封装例程定义此系统调用宏�
 
 Linux内核为中断号 ``` 128（0x80） ``` 注册了一个命名为 ``` entry_INT80_32 ``` 的中断处理程序。
 
-#### 4.2.3 初始化系统调用处理程序entry_INT80_32
+#### 4.2.4 初始化系统调用处理程序entry_INT80_32
 
 在内核初始化期间,内核调用的 ``` trap_init() ``` 函数会建立 ``` def_idts ``` 表中向量128对应的表项。调用的函数： 
 
@@ -177,7 +206,7 @@ Linux内核为中断号 ``` 128（0x80） ``` 注册了一个命名为 ``` entry
 ```
 
 
-#### 4.2.4 内核注册中断处理程序的实现过程
+#### 4.2.5 内核注册中断处理程序的实现过程
 
 注册中断号128（0x80）中断处理程序的实现代码在 ```\linux\arch\x86\kernel\traps.c``` 文件的 ```trap_init``` 函数中：
 
