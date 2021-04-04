@@ -159,7 +159,7 @@ __NR_write 宏来自 _syscall3 的第二个参数（该宏声明可以在头文�
       ret                   ; 返回调用程序
 ```
 
-在我个人虚拟机中，因系统版本关系并未使用 ``` int $0x80 ``` 指令进入系统调用处理程序。读者可以从第五大节看到还有其他的方式进入系统调用处理程序及相关说明。当然，也可以进入子目录 [system_call_without_libc](./system_call_without_libc/README.md) 看看如何在不使用 libc 或者 glibc 的情况下从用户态进入内核态调用系统调用。
+在我个人虚拟机中，因系统版本关系并未使用 ``` int $0x80 ``` 指令进入系统调用处理程序。读者可以从 [5. 快速系统调用](#5-快速系统调用) 看到还有其他的方式进入系统调用处理程序及相关说明。当然，也可以进入子目录 [system_call_without_libc](./system_call_without_libc/README.md) 看看如何在不使用 libc 或者 glibc 的情况下从用户态进入内核态调用系统调用。
 
 
 #### 4.2.3 中断号128
@@ -425,7 +425,7 @@ __visible noinstr void do_int80_syscall_32(struct pt_regs *regs)
 
 #### 4.4.1 服务例程定义
 
-系统调用服务例程的定义一般通过 ``` SYSCALL_DEFINE* ``` 实现。这个宏和封装例程的 ``` _syscall* ``` 宏类似，可以参考下一小节封装例程。例如:
+系统调用服务例程的定义一般通过 ``` SYSCALL_DEFINE* ``` 实现。这个宏和封装例程的 ``` _syscall* ``` 宏类似，可以参考 [4.2 封装例程](#42-封装例程)。例如:
 
 ```
 SYSCALL_DEFINE5(mount, char __user *, dev_name, char __user *, dir_name,
