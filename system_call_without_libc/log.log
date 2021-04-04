@@ -1,0 +1,350 @@
+
+nolibc:     file format elf64-x86-64
+nolibc
+architecture: i386:x86-64, flags 0x00000150:
+HAS_SYMS, DYNAMIC, D_PAGED
+start address 0x0000000000001000
+
+Program Header:
+    PHDR off    0x0000000000000040 vaddr 0x0000000000000040 paddr 0x0000000000000040 align 2**3
+         filesz 0x0000000000000268 memsz 0x0000000000000268 flags r--
+  INTERP off    0x00000000000002a8 vaddr 0x00000000000002a8 paddr 0x00000000000002a8 align 2**0
+         filesz 0x000000000000001c memsz 0x000000000000001c flags r--
+    LOAD off    0x0000000000000000 vaddr 0x0000000000000000 paddr 0x0000000000000000 align 2**12
+         filesz 0x0000000000000321 memsz 0x0000000000000321 flags r--
+    LOAD off    0x0000000000001000 vaddr 0x0000000000001000 paddr 0x0000000000001000 align 2**12
+         filesz 0x00000000000000a7 memsz 0x00000000000000a7 flags r-x
+    LOAD off    0x0000000000002000 vaddr 0x0000000000002000 paddr 0x0000000000002000 align 2**12
+         filesz 0x0000000000000088 memsz 0x0000000000000088 flags r--
+    LOAD off    0x0000000000002f20 vaddr 0x0000000000003f20 paddr 0x0000000000003f20 align 2**12
+         filesz 0x00000000000000e0 memsz 0x00000000000000e0 flags rw-
+ DYNAMIC off    0x0000000000002f20 vaddr 0x0000000000003f20 paddr 0x0000000000003f20 align 2**3
+         filesz 0x00000000000000e0 memsz 0x00000000000000e0 flags rw-
+    NOTE off    0x00000000000002c4 vaddr 0x00000000000002c4 paddr 0x00000000000002c4 align 2**2
+         filesz 0x0000000000000024 memsz 0x0000000000000024 flags r--
+EH_FRAME off    0x0000000000002010 vaddr 0x0000000000002010 paddr 0x0000000000002010 align 2**2
+         filesz 0x000000000000001c memsz 0x000000000000001c flags r--
+   STACK off    0x0000000000000000 vaddr 0x0000000000000000 paddr 0x0000000000000000 align 2**4
+         filesz 0x0000000000000000 memsz 0x0000000000000000 flags rwx
+   RELRO off    0x0000000000002f20 vaddr 0x0000000000003f20 paddr 0x0000000000003f20 align 2**0
+         filesz 0x00000000000000e0 memsz 0x00000000000000e0 flags r--
+
+Dynamic Section:
+  GNU_HASH             0x00000000000002e8
+  STRTAB               0x0000000000000320
+  SYMTAB               0x0000000000000308
+  STRSZ                0x0000000000000001
+  SYMENT               0x0000000000000018
+  DEBUG                0x0000000000000000
+  FLAGS                0x0000000000000008
+  FLAGS_1              0x0000000008000001
+
+Sections:
+Idx Name          Size      VMA               LMA               File off  Algn
+  0 .interp       0000001c  00000000000002a8  00000000000002a8  000002a8  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  1 .note.gnu.build-id 00000024  00000000000002c4  00000000000002c4  000002c4  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  2 .gnu.hash     0000001c  00000000000002e8  00000000000002e8  000002e8  2**3
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  3 .dynsym       00000018  0000000000000308  0000000000000308  00000308  2**3
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  4 .dynstr       00000001  0000000000000320  0000000000000320  00000320  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  5 .text         000000a7  0000000000001000  0000000000001000  00001000  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  6 .rodata       0000000d  0000000000002000  0000000000002000  00002000  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  7 .eh_frame_hdr 0000001c  0000000000002010  0000000000002010  00002010  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  8 .eh_frame     00000058  0000000000002030  0000000000002030  00002030  2**3
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  9 .dynamic      000000e0  0000000000003f20  0000000000003f20  00002f20  2**3
+                  CONTENTS, ALLOC, LOAD, DATA
+ 10 .comment      0000002a  0000000000000000  0000000000000000  00003000  2**0
+                  CONTENTS, READONLY
+ 11 .debug_aranges 00000060  0000000000000000  0000000000000000  00003030  2**4
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 12 .debug_info   00000133  0000000000000000  0000000000000000  00003090  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 13 .debug_abbrev 000000b7  0000000000000000  0000000000000000  000031c3  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 14 .debug_line   000000b1  0000000000000000  0000000000000000  0000327a  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 15 .debug_str    00000127  0000000000000000  0000000000000000  0000332b  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+SYMBOL TABLE:
+00000000000002a8 l    d  .interp	0000000000000000 .interp
+00000000000002c4 l    d  .note.gnu.build-id	0000000000000000 .note.gnu.build-id
+00000000000002e8 l    d  .gnu.hash	0000000000000000 .gnu.hash
+0000000000000308 l    d  .dynsym	0000000000000000 .dynsym
+0000000000000320 l    d  .dynstr	0000000000000000 .dynstr
+0000000000001000 l    d  .text	0000000000000000 .text
+0000000000002000 l    d  .rodata	0000000000000000 .rodata
+0000000000002010 l    d  .eh_frame_hdr	0000000000000000 .eh_frame_hdr
+0000000000002030 l    d  .eh_frame	0000000000000000 .eh_frame
+0000000000003f20 l    d  .dynamic	0000000000000000 .dynamic
+0000000000000000 l    d  .comment	0000000000000000 .comment
+0000000000000000 l    d  .debug_aranges	0000000000000000 .debug_aranges
+0000000000000000 l    d  .debug_info	0000000000000000 .debug_info
+0000000000000000 l    d  .debug_abbrev	0000000000000000 .debug_abbrev
+0000000000000000 l    d  .debug_line	0000000000000000 .debug_line
+0000000000000000 l    d  .debug_str	0000000000000000 .debug_str
+0000000000000000 l    df *ABS*	0000000000000000 assm_syscall.c
+0000000000001032 l     F .text	0000000000000045 write
+0000000000000000 l    df *ABS*	0000000000000000 
+0000000000003f20 l     O .dynamic	0000000000000000 _DYNAMIC
+0000000000002010 l       .eh_frame_hdr	0000000000000000 __GNU_EH_FRAME_HDR
+000000000000101d g       .text	0000000000000000 my_syscall
+0000000000001000 g       .text	0000000000000000 _start
+0000000000004000 g       .dynamic	0000000000000000 __bss_start
+0000000000001077 g     F .text	0000000000000030 main
+0000000000004000 g       .dynamic	0000000000000000 _edata
+0000000000004000 g       .dynamic	0000000000000000 _end
+
+
+Contents of section .interp:
+ 02a8 2f6c6962 36342f6c 642d6c69 6e75782d  /lib64/ld-linux-
+ 02b8 7838362d 36342e73 6f2e3200           x86-64.so.2.    
+Contents of section .note.gnu.build-id:
+ 02c4 04000000 14000000 03000000 474e5500  ............GNU.
+ 02d4 1e86861d 573fda9a 2e06932f e2f484c9  ....W?...../....
+ 02e4 4932341e                             I24.            
+Contents of section .gnu.hash:
+ 02e8 01000000 01000000 01000000 00000000  ................
+ 02f8 00000000 00000000 00000000           ............    
+Contents of section .dynsym:
+ 0308 00000000 00000000 00000000 00000000  ................
+ 0318 00000000 00000000                    ........        
+Contents of section .dynstr:
+ 0320 00                                   .               
+Contents of section .text:
+ 1000 4831ed5f 4889e648 83e4f0e8 67000000  H1._H..H....g...
+ 1010 4889c748 c7c03c00 00000f05 c34889f8  H..H..<......H..
+ 1020 4889f748 89d64889 ca4d89c2 4d89c80f  H..H..H..M..M...
+ 1030 05c3f30f 1efa5548 89e54883 ec20897d  ......UH..H.. .}
+ 1040 fc488975 f0488955 e8488b55 e88b45fc  .H.u.H.U.H.U..E.
+ 1050 48984889 c6488b45 f041b900 00000041  H.H..H.E.A.....A
+ 1060 b8000000 004889d1 4889c2bf 01000000  .....H..H.......
+ 1070 e8a8ffff ffc9c3f3 0f1efa55 4889e548  ...........UH..H
+ 1080 83ec1089 7dfc4889 75f0ba0d 00000048  ....}.H.u......H
+ 1090 8d356a0f 0000bf01 000000e8 92ffffff  .5j.............
+ 10a0 b8000000 00c9c3                      .......         
+Contents of section .rodata:
+ 2000 68656c6c 6f20776f 726c640a 00        hello world..   
+Contents of section .eh_frame_hdr:
+ 2010 011b033b 1c000000 02000000 22f0ffff  ...;........"...
+ 2020 38000000 67f0ffff 58000000           8...g...X...    
+Contents of section .eh_frame:
+ 2030 14000000 00000000 017a5200 01781001  .........zR..x..
+ 2040 1b0c0708 90010000 1c000000 1c000000  ................
+ 2050 e2efffff 45000000 00450e10 8602430d  ....E....E....C.
+ 2060 067c0c07 08000000 1c000000 3c000000  .|..........<...
+ 2070 07f0ffff 30000000 00450e10 8602430d  ....0....E....C.
+ 2080 06670c07 08000000                    .g......        
+Contents of section .dynamic:
+ 3f20 f5feff6f 00000000 e8020000 00000000  ...o............
+ 3f30 05000000 00000000 20030000 00000000  ........ .......
+ 3f40 06000000 00000000 08030000 00000000  ................
+ 3f50 0a000000 00000000 01000000 00000000  ................
+ 3f60 0b000000 00000000 18000000 00000000  ................
+ 3f70 15000000 00000000 00000000 00000000  ................
+ 3f80 1e000000 00000000 08000000 00000000  ................
+ 3f90 fbffff6f 00000000 01000008 00000000  ...o............
+ 3fa0 00000000 00000000 00000000 00000000  ................
+ 3fb0 00000000 00000000 00000000 00000000  ................
+ 3fc0 00000000 00000000 00000000 00000000  ................
+ 3fd0 00000000 00000000 00000000 00000000  ................
+ 3fe0 00000000 00000000 00000000 00000000  ................
+ 3ff0 00000000 00000000 00000000 00000000  ................
+Contents of section .comment:
+ 0000 4743433a 20285562 756e7475 20392e33  GCC: (Ubuntu 9.3
+ 0010 2e302d31 37756275 6e747531 7e32302e  .0-17ubuntu1~20.
+ 0020 30342920 392e332e 3000               04) 9.3.0.      
+Contents of section .debug_aranges:
+ 0000 2c000000 02000000 00000800 00000000  ,...............
+ 0010 00100000 00000000 32000000 00000000  ........2.......
+ 0020 00000000 00000000 00000000 00000000  ................
+ 0030 2c000000 02002e00 00000800 00000000  ,...............
+ 0040 32100000 00000000 75000000 00000000  2.......u.......
+ 0050 00000000 00000000 00000000 00000000  ................
+Contents of section .debug_info:
+ 0000 2a000000 02000000 00000801 00000000  *...............
+ 0010 00100000 00000000 32100000 00000000  ........2.......
+ 0020 00000000 0f000000 4f000000 01800101  ........O.......
+ 0030 00000400 14000000 0801b300 00000c95  ................
+ 0040 0000000f 00000032 10000000 00000075  .......2.......u
+ 0050 00000000 00000052 00000002 84000000  .......R........
+ 0060 010a1b39 00000003 08075b00 00000285  ...9......[.....
+ 0070 00000001 0b124c00 00000308 058c0000  ......L.........
+ 0080 0004a400 0000011b 05940000 00771000  .............w..
+ 0090 00000000 00300000 00000000 00019c94  .....0..........
+ 00a0 00000005 79000000 011b0e94 00000002  ....y...........
+ 00b0 916c056d 00000001 1b1a9b00 00000291  .l.m............
+ 00c0 60000604 05696e74 000708a1 00000007  `....int........
+ 00d0 08a70000 00030106 ae000000 087e0000  .............~..
+ 00e0 00010e08 40000000 32100000 00000000  ....@...2.......
+ 00f0 45000000 00000000 019cfd00 00000966  E..............f
+ 0100 6400010e 12940000 0002916c 05a90000  d..........l....
+ 0110 00010e22 fd000000 02916005 72000000  ..."......`.r...
+ 0120 010e302d 00000002 91580007 08030100  ..0-.....X......
+ 0130 000a00                               ...             
+Contents of section .debug_abbrev:
+ 0000 01110010 06110112 01030e1b 0e250e13  .............%..
+ 0010 05000000 01110125 0e130b03 0e1b0e11  .......%........
+ 0020 01120710 17000002 1600030e 3a0b3b0b  ............:.;.
+ 0030 390b4913 00000324 000b0b3e 0b030e00  9.I....$...>....
+ 0040 00042e01 3f19030e 3a0b3b0b 390b2719  ....?...:.;.9.'.
+ 0050 49131101 12074018 96421901 13000005  I.....@..B......
+ 0060 0500030e 3a0b3b0b 390b4913 02180000  ....:.;.9.I.....
+ 0070 0624000b 0b3e0b03 08000007 0f000b0b  .$...>..........
+ 0080 49130000 082e0103 0e3a0b3b 0b390b27  I........:.;.9.'
+ 0090 19491311 01120740 18964219 01130000  .I.....@..B.....
+ 00a0 09050003 083a0b3b 0b390b49 13021800  .....:.;.9.I....
+ 00b0 000a2600 000000                      ..&....         
+Contents of section .debug_line:
+ 0000 4e000000 03002500 00000101 fb0e0d00  N.....%.........
+ 0010 01010101 00000001 00000100 6173736d  ............assm
+ 0020 5f737973 63616c6c 2e530000 00000000  _syscall.S......
+ 0030 09020010 00000000 0000030f 013d223e  .............=">
+ 0040 4b5c3d75 2f233d3d 3d3d3d3d 2f020100  K\=u/#======/...
+ 0050 01015b00 00000300 25000000 0101fb0e  ..[.....%.......
+ 0060 0d000101 01010000 00010000 01006173  ..............as
+ 0070 736d5f73 79736361 6c6c2e63 00000000  sm_syscall.c....
+ 0080 00050100 09023210 00000000 0000030e  ......2.........
+ 0090 01050908 6805144c 05095605 0102231a  ....h..L..V...#.
+ 00a0 31050508 2f050c08 5a050159 02020001  1.../...Z..Y....
+ 00b0 01                                   .               
+Contents of section .debug_str:
+ 0000 6173736d 5f737973 63616c6c 2e53002f  assm_syscall.S./
+ 0010 686f6d65 2f737465 7068656e 2f646576  home/stephen/dev
+ 0020 636c6f75 642f7072 6f6a2f53 59535445  cloud/proj/SYSTE
+ 0030 4d43414c 4c2f7379 7374656d 5f63616c  MCALL/system_cal
+ 0040 6c5f7769 74686f75 745f6c69 62630047  l_without_libc.G
+ 0050 4e552041 5320322e 3334006c 6f6e6720  NU AS 2.34.long 
+ 0060 756e7369 676e6564 20696e74 00617267  unsigned int.arg
+ 0070 76006e62 79746573 00617267 63007772  v.nbytes.argc.wr
+ 0080 69746500 75696e74 70747200 6c6f6e67  ite.uintptr.long
+ 0090 20696e74 00617373 6d5f7379 7363616c   int.assm_syscal
+ 00a0 6c2e6300 6d61696e 00646174 61006368  l.c.main.data.ch
+ 00b0 61720047 4e552043 31372039 2e332e30  ar.GNU C17 9.3.0
+ 00c0 202d6d74 756e653d 67656e65 72696320   -mtune=generic 
+ 00d0 2d6d6172 63683d78 38362d36 34202d67  -march=x86-64 -g
+ 00e0 202d6661 73796e63 68726f6e 6f75732d   -fasynchronous-
+ 00f0 756e7769 6e642d74 61626c65 73202d66  unwind-tables -f
+ 0100 73746163 6b2d636c 6173682d 70726f74  stack-clash-prot
+ 0110 65637469 6f6e202d 6663662d 70726f74  ection -fcf-prot
+ 0120 65637469 6f6e00                      ection.         
+
+Disassembly of section .text:
+
+0000000000001000 <_start>:
+    .globl _start, my_syscall
+
+    _start:
+	// _start function
+	
+        xor rbp,rbp  /* xoring a value with itself = 0 */
+    1000:	48 31 ed             	xor    %rbp,%rbp
+        pop rdi      /* rdi = argc */
+    1003:	5f                   	pop    %rdi
+        	     /* the pop instruction already added 8 to rsp */
+        mov rsi,rsp  /* rest of the stack as an array of char ptr */
+    1004:	48 89 e6             	mov    %rsp,%rsi
+
+        and rsp,-16
+    1007:	48 83 e4 f0          	and    $0xfffffffffffffff0,%rsp
+        call main    // call main function 
+    100b:	e8 67 00 00 00       	callq  1077 <main>
+
+	// _EXIT
+	// man 2 _EXIT
+	mov rdi,rax /* syscall param 1 = rax (ret value of main) */
+    1010:	48 89 c7             	mov    %rax,%rdi
+        mov rax,60 /* SYS_exit */
+    1013:	48 c7 c0 3c 00 00 00 	mov    $0x3c,%rax
+        syscall
+    101a:	0f 05                	syscall 
+	ret
+    101c:	c3                   	retq   
+
+000000000000101d <my_syscall>:
+
+    my_syscall:
+        mov rax,rdi
+    101d:	48 89 f8             	mov    %rdi,%rax
+        mov rdi,rsi
+    1020:	48 89 f7             	mov    %rsi,%rdi
+        mov rsi,rdx
+    1023:	48 89 d6             	mov    %rdx,%rsi
+        mov rdx,rcx
+    1026:	48 89 ca             	mov    %rcx,%rdx
+        mov r10,r8
+    1029:	4d 89 c2             	mov    %r8,%r10
+        mov r8,r9
+    102c:	4d 89 c8             	mov    %r9,%r8
+        syscall
+    102f:	0f 05                	syscall 
+        ret
+    1031:	c3                   	retq   
+
+0000000000001032 <write>:
+typedef unsigned long int uintptr; /* size_t */
+typedef long int intptr; /* ssize_t */
+
+static
+intptr write(int fd, void const* data, uintptr nbytes)
+{
+    1032:	f3 0f 1e fa          	endbr64 
+    1036:	55                   	push   %rbp
+    1037:	48 89 e5             	mov    %rsp,%rbp
+    103a:	48 83 ec 20          	sub    $0x20,%rsp
+    103e:	89 7d fc             	mov    %edi,-0x4(%rbp)
+    1041:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+    1045:	48 89 55 e8          	mov    %rdx,-0x18(%rbp)
+    return (intptr)
+        my_syscall(
+    1049:	48 8b 55 e8          	mov    -0x18(%rbp),%rdx
+            (void*)1, /* SYS_write */
+            (void*)(intptr)fd,
+    104d:	8b 45 fc             	mov    -0x4(%rbp),%eax
+    1050:	48 98                	cltq   
+        my_syscall(
+    1052:	48 89 c6             	mov    %rax,%rsi
+    1055:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
+    1059:	41 b9 00 00 00 00    	mov    $0x0,%r9d
+    105f:	41 b8 00 00 00 00    	mov    $0x0,%r8d
+    1065:	48 89 d1             	mov    %rdx,%rcx
+    1068:	48 89 c2             	mov    %rax,%rdx
+    106b:	bf 01 00 00 00       	mov    $0x1,%edi
+    1070:	e8 a8 ff ff ff       	callq  101d <my_syscall>
+            (void*)data,
+            (void*)nbytes,
+            0, /* ignored */
+            0  /* ignored */
+        );
+}
+    1075:	c9                   	leaveq 
+    1076:	c3                   	retq   
+
+0000000000001077 <main>:
+
+int main(int argc, char* argv[])
+{
+    1077:	f3 0f 1e fa          	endbr64 
+    107b:	55                   	push   %rbp
+    107c:	48 89 e5             	mov    %rsp,%rbp
+    107f:	48 83 ec 10          	sub    $0x10,%rsp
+    1083:	89 7d fc             	mov    %edi,-0x4(%rbp)
+    1086:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+    write(1, "hello world\n", 13);
+    108a:	ba 0d 00 00 00       	mov    $0xd,%edx
+    108f:	48 8d 35 6a 0f 00 00 	lea    0xf6a(%rip),%rsi        # 2000 <main+0xf89>
+    1096:	bf 01 00 00 00       	mov    $0x1,%edi
+    109b:	e8 92 ff ff ff       	callq  1032 <write>
+
+    return 0;
+    10a0:	b8 00 00 00 00       	mov    $0x0,%eax
+}
+    10a5:	c9                   	leaveq 
+    10a6:	c3                   	retq   
