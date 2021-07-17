@@ -2,9 +2,6 @@
 SYSTEM CALL in Linux
 ==================
 
-(引用的代码基于内核v5.9-rc8）
-
-
 - [SYSTEM CALL in Linux](#system-call-in-linux)
   - [1. 什么是系统调用](#1-什么是系统调用)
   - [2. 系统调用的优点](#2-系统调用的优点)
