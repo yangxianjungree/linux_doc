@@ -1,40 +1,39 @@
+# SYSTEM CALL WITH LIBC
 
-SYSTEM CALL WITH LIBC
-========================
-
+-------------------
 
 工作中，我们一般都通过glibc的封装例程使用系统调用。glibc中可能多个封装例程对应一个系统调用，可能一个封装对应一个系统调用，也有可能一个对应多个。在我们程序运行之前，系统创建进程时会从glibc动态库中将程序代码中调用的封装例程实现代码映射到进程的地址空间。所以我们编译好的程序是无法通过反汇编自己的可执行文件查看封装例程的实现的。应该可以在程序运行时通过gdb看，毕竟封装例程也在用户态运行。
 
 本文以调用一次 write 系统调用的一系列封装例程为例。
 
-
 - [SYSTEM CALL WITH LIBC](#system-call-with-libc)
-    - [printf 库函数](#printf-库函数)
+  - [printf 库函数](#printf-库函数)
     - [puts 库例程](#puts-库例程)
     - [syscall 库函数](#syscall-库函数)
     - [总结](#总结)
 
+## printf 库函数
 
-### printf 库函数
+-------------------
 
 - 简单调用 printf 代码
 
-```
+``` c
 stephen@stephen:~/proj/SYSTEMCALL/system_call_with_libc$ cat printf.c 
 #include <stdio.h>
 
 int main(int argc, char* argv)
 {
-	printf("hello, world.\n");
+ printf("hello, world.\n");
 
-	return 0;
+ return 0;
 }
 
 ```
 
 - 生成可执行文件libc_printf之后，我们对其进行反汇编，可以看到printf的实现其实是调用了puts函数。
 
-```
+``` asm
 stephen@stephen:~/proj/SYSTEMCALL/system_call_with_libc$ objdump -dSsx libc_printf
 
 libc_printf:     file format elf64-x86-64
@@ -87,7 +86,7 @@ Disassembly of section .text:
 
 - 查看运行这段代码的进程所调用的所有系统
 
-```
+``` shell
 stephen@stephen:~/proj/SYSTEMCALL/system_call_with_libc$ strace ./libc_printf 
 execve("./libc_printf", ["./libc_printf"], 0x7ffd77782f80 /* 60 vars */) = 0
 brk(NULL)                               = 0x5608c5772000
@@ -128,20 +127,19 @@ exit_group(0)                           = ?
 +++ exited with 0 +++
 ```
 
-
 ### puts 库例程
 
 可以仿照 printf 函数再来一遍，结果和上面差不多：
 
-```
+``` c
 stephen@stephen:~/proj/SYSTEMCALL/system_call_with_libc$ cat puts.c 
 #include <stdio.h>
 
 int main(int argc, char* argv)
 {
-	puts("hello, world.\n");
+ puts("hello, world.\n");
 
-	return 0;
+ return 0;
 }
 stephen@stephen:~/proj/SYSTEMCALL/system_call_with_libc$ make libc_puts 
 gcc puts.c -o libc_puts
@@ -155,7 +153,7 @@ stephen@stephen:~/proj/SYSTEMCALL/system_call_with_libc$ strace ./libc_puts
 
 - 代码
 
-```
+``` c
 stephen@stephen:~/proj/SYSTEMCALL/system_call_with_libc$ cat syscall.c 
 #include <stdio.h>
 #include <unistd.h>
@@ -164,16 +162,16 @@ stephen@stephen:~/proj/SYSTEMCALL/system_call_with_libc$ cat syscall.c
 
 int main()
 {
-	const char* buf = "hello, world.\n";
-	syscall(__NR_write, STDOUT_FILENO, buf, strlen(buf));
+ const char* buf = "hello, world.\n";
+ syscall(__NR_write, STDOUT_FILENO, buf, strlen(buf));
 
-	return 0;
+ return 0;
 }
 ```
 
 - 反汇编
 
-```
+``` asm
 stephen@stephen:~/proj/SYSTEMCALL/system_call_with_libc$ objdump -dSsx libc_syscall
 ...
 0000000000001169 <main>:
@@ -205,7 +203,7 @@ stephen@stephen:~/proj/SYSTEMCALL/system_call_with_libc$ objdump -dSsx libc_sysc
 
 - 执行时系统调用
 
-```
+``` shell
 stephen@stephen:~/proj/SYSTEMCALL/system_call_with_libc$ strace ./libc_syscall 
 execve("./libc_syscall", ["./libc_syscall"], 0x7ffc11854a50 /* 60 vars */) = 0
 brk(NULL)                               = 0x557789e4f000

@@ -1,44 +1,44 @@
+# SYSTEM CALL WITHOUT LIBC
 
-SYSTEM CALL WITHOUT LIBC
-========================
+-------------------
 
 在大多数的用户进程中调用系统都要通过glibc的封装例程。当然，我们也可以使用汇编，将系统调用所需要的系统调用号和参数传入相应的寄存器，通过进入系统调用处理程序的中断之类进入内核态；然后交由内核完成后续的操作；最后，我们从存有系统调用返回值的寄存器中取回返回值。这样，我们就完成了一次在没有glibc库的情况下的系统调用。
 
-
 本文以调用一次 write 系统调用为例。
 
-
 - [SYSTEM CALL WITHOUT LIBC](#system-call-without-libc)
-    - [syscall 封装](#syscall-封装)
-    - [start 函数封装](#start-函数封装)
+  - [syscall 封装](#syscall-封装)
+  - [start 函数封装](#start-函数封装)
     - [syscall 和 start 代码示例](#syscall-和-start-代码示例)
     - [main 函数](#main-函数)
     - [main 函数代码示例](#main-函数代码示例)
     - [反汇编信息简单梳理](#反汇编信息简单梳理)
 
+## syscall 封装
 
-### syscall 封装
+-------------------
 
-1.用户应用程序使用的整数寄存器的传递顺序依次是％rdi ，％rsi，％rdx，％rcx，％r8和％r9。内核态从％rdi，％rsi，％rdx，％r10，％r8和％r9寄存器中取相应的参数。
+- 1.用户应用程序使用的整数寄存器的传递顺序依次是％rdi ，％rsi，％rdx，％rcx，％r8和％r9。内核态从％rdi，％rsi，％rdx，％r10，％r8和％r9寄存器中取相应的参数。
 
-2.通过syscall指令完成系统调用。内核销毁寄存器％rcx和％r11。
+- 2.通过syscall指令完成系统调用。内核销毁寄存器％rcx和％r11。
 
-3.必须在寄存器％rax中传递syscall的编号。
+- 3.必须在寄存器％rax中传递syscall的编号。
 
-4.系统调用仅限于六个参数，参数不会在堆栈上传递，因为应用进程在用户态，系统调用服务例程在内核态。
+- 4.系统调用仅限于六个参数，参数不会在堆栈上传递，因为应用进程在用户态，系统调用服务例程在内核态。
 
-5.从系统调用返回，寄存器％rax包含系统调用的结果。-4095到-1之间的值表示错误，它是-errno。
+- 5.从系统调用返回，寄存器％rax包含系统调用的结果。-4095到-1之间的值表示错误，它是-errno。
 
-6.仅将INTEGER类型或MEMORY的地址值传递给内核。
+- 6.仅将INTEGER类型或MEMORY的地址值传递给内核。
 
+## start 函数封装
 
-### start 函数封装
+-------------------
 
-系统在创建一个新进程时，会从磁盘中读取ELF格式的可执行文件的数据，然后加载到进程结构体的相应字段中。最后从代码段中读取指令数据并执行。而代码段一般都是由 ``` _start ``` 标签指向，也就是 _start 是进程创建完毕后真正第一次执行的地方。start 函数完成一些基本初始化工作之后，会跳到我们熟知的 main 函数中执行。
+系统在创建一个新进程时，会从磁盘中读取ELF格式的可执行文件的数据，然后加载到进程结构体的相应字段中。最后从代码段中读取指令数据并执行。而代码段一般都是由 ``` start ``` 标签指向，也就是 _start 是进程创建完毕后真正第一次执行的地方。start 函数完成一些基本初始化工作之后，会跳到我们熟知的 main 函数中执行。
 
 ### syscall 和 start 代码示例
 
-```
+``` asm
 stephen@stephen:~/proj/SYSTEMCALL/system_call_without_libc$ cat assm_syscall.S
 
 .intel_syntax noprefix
@@ -46,22 +46,22 @@ stephen@stephen:~/proj/SYSTEMCALL/system_call_without_libc$ cat assm_syscall.S
     .globl _start, my_syscall
 
     _start:
-	// _start function
-	
+ // _start function
+ 
         xor rbp,rbp  /* xoring a value with itself = 0 */
         pop rdi      /* rdi = argc */
-        	     /* the pop instruction already added 8 to rsp */
+              /* the pop instruction already added 8 to rsp */
         mov rsi,rsp  /* rest of the stack as an array of char ptr */
 
         and rsp,-16
         call main    // call main function 
 
-	// _EXIT
-	// man 2 _EXIT
-	mov rdi,rax /* syscall param 1 = rax (ret value of main) */
+ // _EXIT
+ // man 2 _EXIT
+ mov rdi,rax /* syscall param 1 = rax (ret value of main) */
         mov rax,60 /* SYS_exit */
         syscall
-	ret
+ ret
 
     my_syscall:
         mov rax,rdi
@@ -81,7 +81,7 @@ stephen@stephen:~/proj/SYSTEMCALL/system_call_without_libc$ cat assm_syscall.S
 
 ### main 函数代码示例
 
-```
+``` c
 stephen@stephen:~/proj/SYSTEMCALL/system_call_without_libc$ cat assm_syscall.c
 
 void* my_syscall(
@@ -119,12 +119,11 @@ int main(int argc, char* argv[])
 
 ```
 
-
 ### 反汇编信息简单梳理
 
 从反汇编的信息可以看到，我们进程创建后，会从 0x0000000000001030 这个代码段地址开始执行代码。这个地址正是我们的 start 函数地址。start 函数完成例如初始化 main 函数参数之后，调用 main 函数（起始地址是 0000000000001000）。我们的 main 函数调用系统调用封装例程（000000000000104d），然后将用户数据压入相应的寄存器之后，通过 syscall 汇编指令进入内核态并执行系统调用处理程序和系统调用服务例程（当然这里我们是看不到的）。系统调用完成后，main 函数处理返回值，然后回到 start 函数。 start 函数然后调用 SYS_exit （0x3c） 系统调用退出整个进程。
 
-```
+``` shell
 stephen@stephen:~/proj/SYSTEMCALL/system_call_without_libc$ make
 stephen@stephen:~/proj/SYSTEMCALL/system_call_without_libc$ objdump -dSsx nolibc
 
