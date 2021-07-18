@@ -1,21 +1,38 @@
-# Sub-systems in Linux (v5.9-rc8)
+# linux 子系统 (引用的代码基于内核v5.9-rc8）
 
 -------------------
 
-([中文 readme](./README_ch.md))
+([Read in English](./README.md))
 
-- [Sub-systems in Linux (v5.9-rc8)](#sub-systems-in-linux-v59-rc8)
-  - [1. Interupt](#1-interupt)
-  - [2. System Call](#2-system-call)
+- [linux 子系统 (引用的代码基于内核v5.9-rc8）](#linux-子系统-引用的代码基于内核v59-rc8)
+  - [1. 内核源码结构](#1-内核源码结构)
+  - [2. 中断](#2-中断)
+  - [3. 系统调用](#3-系统调用)
+  - [4. 进程](#4-进程)
 
-## 1. Interupt
-
--------------------
-
-## 2. System Call
+## 1. 内核源码结构
 
 -------------------
 
-About how to go to call a system call from users' program to kernel. And there are simple example in subdirectory to call system call without libc or not.
+- linux版本信息；
+- 源码目录结构；
+- 源码各目录功能简单介绍；
 
-[Enter system-call](./syscall/README.md)
+[进入源码结构](./aaa_linux_source/README.md)
+
+## 2. 中断
+
+-------------------
+
+## 3. 系统调用
+
+-------------------
+
+[进入系统调用](./syscall/README.md)
+
+## 4. 进程
+
+-------------------
+
+- 进程描述；
+- 进程调度；
