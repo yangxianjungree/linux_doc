@@ -2,7 +2,7 @@
 
 -------------------
 
-([中文 readme](./README_ch.md))
+([中文 readme](./README.md))
 
 - [Sub-systems in Linux (v5.9-rc8)](#sub-systems-in-linux-v59-rc8)
   - [1. Linux source](#1-linux-source)

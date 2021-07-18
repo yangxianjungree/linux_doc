@@ -2,7 +2,7 @@
 
 -------------------
 
-([Read in English](./README.md))
+([Read in English](./README_en.md))
 
 - [linux 子系统 (引用的代码基于内核v5.9-rc8）](#linux-子系统-引用的代码基于内核v59-rc8)
   - [1. 内核源码结构](#1-内核源码结构)
